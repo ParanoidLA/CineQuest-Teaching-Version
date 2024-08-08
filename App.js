@@ -1,20 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ExpoRoot } from "expo-router";
+import { AppRegistry } from "react-native";
+import { name as appName } from "./app.json";
+import { UserProvider } from './context/UserContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 export default function App() {
+  const ctx = require.context("./app/_tabs");
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <UserProvider>
+      <ThemeProvider>
+        <ExpoRoot context={ctx} />
+      </ThemeProvider>
+    </UserProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+AppRegistry.registerComponent(appName, () => App);
